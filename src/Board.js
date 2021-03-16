@@ -55,7 +55,14 @@ class Board extends Component {
 
   render() {
     if (this.state.hasWon) {
-      return <h1>You Won!</h1>;
+      return (
+        <div className="Board-title">
+          <div className="winner">
+            <span className="neon-orange">You</span>
+            <span className="neon-blue">WIN!</span>
+          </div>
+        </div>
+      );
     }
     let tblBoard = [];
     for (let y = 0; y < this.props.nrows; y++) {
@@ -73,9 +80,16 @@ class Board extends Component {
       tblBoard.push(<tr>{row}</tr>);
     }
     return (
-      <table className="Board">
-        <tbody>{tblBoard}</tbody>
-      </table>
+      <div>
+        <div className="Board-title">
+          <div className="neon-orange">Lights</div>
+          <div className="neon-blue">Out</div>
+        </div>
+
+        <table className="Board">
+          <tbody>{tblBoard}</tbody>
+        </table>
+      </div>
     );
   }
 }
