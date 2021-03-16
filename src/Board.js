@@ -29,28 +29,37 @@ class Board extends Component {
     return board;
   }
 
-  // flipCellsAround(coord) {
-  //   let { ncols, nrows } = this.props;
-  //   let board = this.state.board;
-  //   let [y, x] = coord.split('-').map(Number);
+  flipCellsAround(coord) {
+    let { ncols, nrows } = this.props;
+    let board = this.state.board;
+    let [y, x] = coord.split('-').map(Number);
 
-  //   function flipCell(y, x) {
-  //     // if this coord is actually on board, flip it
+    function flipCell(y, x) {
+      // if this coord is actually on board, flip it
 
-  //     if (x >= 0 && x < ncols && y >= 0 && y < nrows) {
-  //       board[y][x] = !board[y][x];
-  //     }
-  //   }
+      if (x >= 0 && x < ncols && y >= 0 && y < nrows) {
+        board[y][x] = !board[y][x];
+      }
+    }
 
-  //   this.setState({ board, hasWon });
-  // }
+    let hasWon = false;
+    flipCell(y, x);
+    this.setState({ board, hasWon });
+  }
 
   render() {
     let tblBoard = [];
     for (let y = 0; y < this.props.nrows; y++) {
       let row = [];
       for (let x = 0; x < this.props.ncols; x++) {
-        row.push(<Cell isLit={this.state.board[y][x]} />);
+        let coord = `${y}-${x}`;
+        row.push(
+          <Cell
+            key={coord}
+            isLit={this.state.board[y][x]}
+            flipCellsAroundMe={() => this.flipCellsAround(coord)}
+          />
+        );
       }
       tblBoard.push(<tr>{row}</tr>);
     }
